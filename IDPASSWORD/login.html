@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>登入</title>
+    <script>
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('https://script.google.com/macros/s/AKfycbx8MeD-4JZn5ZxCoOYLNfzLigqfIfve17iXeX08BIEu6-6J1wi1s0oY4x6FRJBoghs/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'login',
+                    email: email,
+                    password: password
+                })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert('登入成功！');
+                window.location.href = '/test/IDPASSWORD/index.html'; // 登入成功後重定向
+            } else {
+                alert('登入失敗，請檢查您的帳號和密碼。');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>登入頁面</h1>
+    <form onsubmit="event.preventDefault(); login();">
+        <label for="email">電子郵件：</label>
+        <input type="email" id="email" required><br>
+        <label for="password">密碼：</label>
+        <input type="password" id="password" required><br>
+        <button type="submit">登入</button>
+    </form>
+</body>
+</html>
