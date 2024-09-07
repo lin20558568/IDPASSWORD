@@ -145,12 +145,17 @@
     });
 
     // 切換登入、註冊和忘記密碼分頁
+    function switchTab(activeTab) {
+      const tabs = ['loginContent', 'registerContent', 'resetPasswordContent'];
+      tabs.forEach(tab => {
+        document.getElementById(tab).classList.remove('active');
+      });
+      document.getElementById(activeTab).classList.add('active');
+    }
+
     document.getElementById('loginTab').addEventListener('click', function(event) {
       event.preventDefault();
-      document.getElementById('loginContent').classList.add('active');
-      document.getElementById('registerContent').classList.remove('active');
-      document.getElementById('resetPasswordContent').classList.remove('active');
-      document.getElementById('newPasswordContent').style.display = 'none';
+      switchTab('loginContent');
       this.classList.add('active');
       document.getElementById('registerTab').classList.remove('active');
       document.getElementById('resetPasswordTab').classList.remove('active');
@@ -158,10 +163,7 @@
 
     document.getElementById('registerTab').addEventListener('click', function(event) {
       event.preventDefault();
-      document.getElementById('registerContent').classList.add('active');
-      document.getElementById('loginContent').classList.remove('active');
-      document.getElementById('resetPasswordContent').classList.remove('active');
-      document.getElementById('newPasswordContent').style.display = 'none';
+      switchTab('registerContent');
       this.classList.add('active');
       document.getElementById('loginTab').classList.remove('active');
       document.getElementById('resetPasswordTab').classList.remove('active');
@@ -169,10 +171,7 @@
 
     document.getElementById('resetPasswordTab').addEventListener('click', function(event) {
       event.preventDefault();
-      document.getElementById('resetPasswordContent').classList.add('active');
-      document.getElementById('loginContent').classList.remove('active');
-      document.getElementById('registerContent').classList.remove('active');
-      document.getElementById('newPasswordContent').style.display = 'none';
+      switchTab('resetPasswordContent');
       this.classList.add('active');
       document.getElementById('loginTab').classList.remove('active');
       document.getElementById('registerTab').classList.remove('active');
@@ -221,7 +220,6 @@
         window.location.href = 'login.html'; // 返回登入頁面
       } else {
         alert('❗️無效的認證碼或密碼修改失敗');
-        window.location.href = 'login.html'; // 返回登入頁面
       }
     }
   </script>
