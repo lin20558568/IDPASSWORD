@@ -50,14 +50,15 @@
   </div>
 
   <script>
-    const GAS_URL = 'https://script.google.com/macros/s/1OJ-GnrEM9UpFTvaXUZgU7SJ2t6CCcRw6R2xbZsh5b4Y/exec'; // 替換為你的GAS發布URL
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzOw0eihYgtQ7zgor-jShZ0SDUUvoxe_crkfmysVe88zZjEZV-urbaxGyi3LEGi6DID/exec'; // 替換為你的GAS發布URL
 
     // 獲取系統名稱
     fetch(GAS_URL + '?action=getSystemName')
       .then(response => response.json())
       .then(data => {
         document.getElementById('systemName').innerText = data.result;
-      });
+      })
+      .catch(error => console.error('Error fetching system name:', error));
 
     // 登入表單事件
     document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -65,12 +66,16 @@
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
 
-      fetch(GAS_URL + '?action=loginUser', {
+      fetch(GAS_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify({ email: email, password: password })
+        body: new URLSearchParams({
+          action: 'loginUser',
+          email: email,
+          password: password
+        })
       })
       .then(response => response.json())
       .then(data => {
@@ -80,7 +85,8 @@
         } else {
           alert('登入失敗！');
         }
-      });
+      })
+      .catch(error => console.error('Error during login:', error));
     });
 
     // 密碼顯示切換
